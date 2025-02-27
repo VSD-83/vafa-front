@@ -1,16 +1,19 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signup from './components/Signup';
+import Entrance from './components/Entrance';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import Signup from './components/Signup';
+import Main from './components/Main';
 
 const App: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Signup />} />
+                <Route path="/" element={<Entrance />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/main" element={<Main />} />
             </Routes>
         </Router>
     );
