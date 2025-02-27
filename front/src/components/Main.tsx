@@ -10,10 +10,16 @@ const Main: React.FC = () => {
         navigate('/');
     };
 
+    const handleCreatepoll = () => {
+        
+        navigate('/pollcreation');
+    };
+
     return (
         <div>
             <h1>Main Page</h1>
             <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleCreatepoll}>Create Poll</button>
         </div>
     );
 };
