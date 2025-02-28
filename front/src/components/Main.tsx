@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Import jwt-decode
 import PollCreation from './PollCreation';
 
 const Main: React.FC = () => {
     const navigate = useNavigate();
     const [showPollCreation, setShowPollCreation] = useState(false);
     const [polls, setPolls] = useState<any[]>([]);
+    const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/');
-    };
-
-    const handleCreatePoll = () => {
-        setShowPollCreation(true);
-    };
-
-    const closePollCreation = () => {
-        setShowPollCreation(false);
-    };
-
-    
     useEffect(() => {
+        // Decode the token and check if the user is an admin
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                const decoded: any = jwtDecode(token);
+                setIsAdmin(decoded.isAdmin || false); // Ensure it's a boolean
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+
         const fetchPolls = async () => {
             try {
                 const response = await fetch('http://localhost:3000/polls', {
@@ -42,11 +41,27 @@ const Main: React.FC = () => {
         fetchPolls();
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
+
+    const handleCreatePoll = () => {
+        setShowPollCreation(true);
+    };
+
+    const closePollCreation = () => {
+        setShowPollCreation(false);
+    };
+
     return (
         <div>
             <h1>Main Page</h1>
             <button onClick={handleLogout}>Logout</button>
-            <button onClick={handleCreatePoll}>Create Poll</button>
+
+            {/* Only show "Create Poll" if the user is an admin */}
+            {isAdmin && <button onClick={handleCreatePoll}>Create Poll</button>}
+            
             {showPollCreation && <PollCreation onClose={closePollCreation} />}
 
             {/* Display Polls */}
@@ -138,6 +153,5 @@ const OptionsList: React.FC<{ pollID: number }> = ({ pollID }) => {
         </div>
     );
 };
-
 
 export default Main;
