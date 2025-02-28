@@ -67,17 +67,21 @@ const Main: React.FC = () => {
             {/* Display Polls */}
             <div>
                 <h2>Polls</h2>
-                {polls.map(poll => (
-                    <div key={poll.pollID}>
-                        <h3>{poll.title}</h3>
-                        <p>{poll.description}</p>
-                        <p>Anonymous: {poll.isAnonymous ? 'Yes' : 'No'}</p>
-                        <p>Expiration Date: {new Date(poll.expirationDate).toLocaleString()}</p>
+                {polls.map(poll => {
+                    console.log("Rendering poll:", poll); // Debugging log
+                    return (
+                        <div key={poll.pollid}> {/* Use pollid instead of pollID */}
+                            <h3>{poll.title}</h3>
+                            <p>{poll.description}</p>
+                            <p>Anonymous: {poll.isanonymous ? 'Yes' : 'No'}</p>
+                            <p>Expiration Date: {new Date(poll.expirationdate).toLocaleString()}</p>
 
-                        {/* Fetch and display options for the poll */}
-                        <OptionsList pollID={poll.pollID} />
-                    </div>
-                ))}
+                            <OptionsList pollID={poll.pollid} /> {/* Use pollid here */}
+                        </div>
+                    );
+                })}
+
+
             </div>
         </div>
     );
@@ -89,27 +93,68 @@ const OptionsList: React.FC<{ pollID: number }> = ({ pollID }) => {
     const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
+        console.log("Fetching options for pollID:", pollID); // Debugging log
+
         const fetchOptions = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/polls/${pollID}/options`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch options');
+            }
+
+            const data = await response.json();
+            console.log("Fetched options:", data); // Debugging log
+            setOptions(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+        
+
+        const checkIfVoted = async () => {
             try {
+                // ✅ Check if the user has already voted
                 const response = await fetch(`http://localhost:3000/polls/${pollID}/votes`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch options');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const userVote = data.find(vote => vote.userID === getUserID());
+
+                    if (userVote) {
+                        setSelectedOptionID(userVote.optionID);
+                        setHasVoted(true);
+                    }
                 }
-                const data = await response.json();
-                setOptions(data);
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchOptions();
+        checkIfVoted();
     }, [pollID]);
 
+    const getUserID = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decoded: any = jwtDecode(token);
+            return decoded.userID;
+        }
+        return null;
+    };
+
     const castVote = async (optionID: number) => {
+        if (hasVoted) return;
+
         try {
             const response = await fetch('http://localhost:3000/votes', {
                 method: 'POST',
@@ -153,5 +198,6 @@ const OptionsList: React.FC<{ pollID: number }> = ({ pollID }) => {
         </div>
     );
 };
+
 
 export default Main;
