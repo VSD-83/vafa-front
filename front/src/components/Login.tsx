@@ -1,5 +1,5 @@
-// src/components/Login.tsx
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
@@ -7,30 +7,25 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, password }),
-        });
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
 
-        if (response.ok) {
-            const data = await response.json();
-            // Store the token in localStorage or context
-            localStorage.setItem('token', data.token);
-            navigate('/main');
-        } else {
-            alert('Invalid credentials');
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, { name, password });
+            localStorage.setItem('token', response.data.token);
+            navigate('/home');
+        } catch (error) {
+            alert('Error logging in');
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <button type="submit">Login</button>
+        </form>
     );
 };
 
