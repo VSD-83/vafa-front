@@ -1,4 +1,3 @@
-// src/components/Login.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ const Login: React.FC = () => {
 
         if (response.ok) {
             const data = await response.json();
-            // Store the token in localStorage or context
             localStorage.setItem('token', data.token);
             navigate('/main');
         } else {

@@ -1,4 +1,3 @@
-// src/components/Entrance.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

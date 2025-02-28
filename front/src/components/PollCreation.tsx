@@ -5,7 +5,7 @@ const PollCreation: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const [description, setDescription] = useState('');
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [expirationDate, setExpirationDate] = useState('');
-    const [options, setOptions] = useState<string[]>(['', '']); // Start with two options
+    const [options, setOptions] = useState<string[]>(['', '']);
     const [error, setError] = useState('');
 
     const handleAddOption = () => {
@@ -27,9 +27,9 @@ const PollCreation: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             setError('Please fill all fields and provide at least two options.');
             return;
         }
-
+    
         setError(''); // Clear any previous error
-
+    
         const token = localStorage.getItem('token');
         try {
             const response = await fetch('http://localhost:3000/polls', {
@@ -43,20 +43,26 @@ const PollCreation: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     description,
                     isAnonymous,
                     expirationDate,
+                    options: filledOptions
                 }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to create poll');
             }
+    
 
-            // Optionally handle success response (e.g., navigate to a different page or update state)
-            onClose(); // Close the poll creation menu
+            const data = await response.json();
+            console.log("Created Poll ID:", data.pollID);
+    
+            onClose();
         } catch (err) {
             console.error(err);
             setError('Error creating poll');
         }
     };
+    
+    
 
     return (
         <div>
