@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from './signup.module.css';
 
 const Signup: React.FC = () => {
     const [name, setName] = useState('');
@@ -22,11 +23,23 @@ const Signup: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Sign Up</h1>
-            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleSignup}>Sign Up</button>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Sign Up</h1>
+            <input
+                className={styles.input}
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                className={styles.input}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button className={styles.button} onClick={handleSignup}>Sign Up</button>
         </div>
     );
 };

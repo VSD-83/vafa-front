@@ -1,0 +1,221 @@
+/* Main.module.css */
+
+/* General container for the whole page */
+.mainContainer {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  /* Title styling */
+  .mainTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  /* Poll Container (Card style) */
+  .pollContainer {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .pollContainer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Poll Title */
+  .pollTitle {
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  /* Poll description */
+  .pollDescription {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+  
+  /* Poll expiration info */
+  .pollExpiration {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
+  /* Anonymous Poll indicator */
+  .pollAnonymous {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  
+  /* Option list styling */
+  .optionList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  /* Option Container for each option */
+  .optionItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    color: #333;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .optionItem:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .optionItem input {
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  
+  /* Option Button Style */
+  .optionButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  }
+  
+  .optionButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .optionButton:focus {
+    outline: none;
+  }
+  
+  /* Vote Count styling */
+  .voteCount {
+    font-size: 1rem;
+    color: #444;
+    margin-left: auto;
+    padding-left: 10px;
+  }
+  
+  /* Poll buttons for creating and logging out */
+  .pollActionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Poll creation modal or page */
+  .pollCreationContainer {
+    width: 100%;
+    max-width: 700px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pollCreationContainer input,
+  .pollCreationContainer textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  .pollCreationContainer button {
+    align-self: flex-end;
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .pollCreationContainer button:hover {
+    background-color: #218838;
+  }
+  
+  /* Chart Container */
+  .chartContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Chart Bar */
+  .chartBar {
+    width: 50px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .chartBar:hover {
+    transform: scale(1.1);
+  }
+  
